@@ -7,27 +7,7 @@ function numToWords(input){
 	var tens = ['', 'ten', 'twenty', 'thirty', 'forty', 'fifty', 'sixty', 'seventy', 'eighty', 'ninety'];
 	var places = ['', 'thousand', 'million'];
 
-	function toHundreds(trimmedInput){
-		var x = 0;
-	
-		while(trimmedInput > 9){
-			if(trimmedInput > 99){
-				var x = trimmedInput / 100;
-				x = parseInt(x);
-				trimmedInput = trimmedInput % 100;
-				console.log(ones[x] + " hundred");
-			}
-			else{
-				var x = trimmedInput / 10;
-				x = parseInt(x);
-				trimmedInput = trimmedInput % 10;
-				console.log(tens[x]);
-			}
-		}
-		x = trimmedInput;
-		console.log(ones[x]);
-
-	}
+	var toPrint = "";
 
 	if(input > 1000000){
 		console.log("Invalid input!");
@@ -37,19 +17,78 @@ function numToWords(input){
 			if(input > 999999){
 				var i = input / 1000000;
 				i = parseInt(i);
-				toHundreds(i);
 				input = input % 1000;
-				console.log("million");
+
+				var x = 0;
+	
+				while(i > 9){
+					if(i > 99){
+						var x = i / 100;
+						x = parseInt(x);
+						i = i % 100;
+						toPrint += ones[x] + " hundred";
+					}
+					else{
+						var x = i / 10;
+						x = parseInt(x);
+						i = i % 10;
+						toPrint += " " + tens[x];
+					}
+				}
+				x = i;
+				toPrint += " " + ones[x];
+				
+
+				toPrint += " million ";
 			}
 			else{
 				var i = input / 1000;
 				i = parseInt(i);
-				toHundreds(i);
 				input = input % 1000;
-				console.log("thousand");
+				
+				var x = 0;
+	
+				while(i > 9){
+					if(i > 99){
+						var x = i / 100;
+						x = parseInt(x);
+						i = i % 100;
+						toPrint += ones[x] + " hundred";
+					}
+					else{
+						var x = i / 10;
+						x = parseInt(x);
+						i = i % 10;
+						toPrint += " " + tens[x];
+					}
+				}
+				x = i;
+				toPrint += " " + ones[x];
+
+				toPrint += " thousand ";
 			}
 		}
-		toHundreds(input);
+			
+		var x = 0;
+
+			while(input > 9){
+				if(input > 99){
+					var x = input / 100;
+					x = parseInt(x);
+					input = input % 100;
+					toPrint += ones[x] + " hundred";
+				}
+				else{
+					var x = input / 10;
+					x = parseInt(x);
+					input = input % 10;
+					toPrint += " " + tens[x];
+				}
+			}
+			x = input;
+			toPrint += " " + ones[x];
+
+			console.log(toPrint);
 	}
 }
 
@@ -60,13 +99,17 @@ function wordsToNum(input){
 function numberDelimited(input, delim, jumpSize){
 	var splitted = input.toString().split("");
 
+	var toPrint = "";
+
 	for(var i = 0; i < splitted.length - jumpSize; i++){
-		console.log(splitted[i]);
+		toPrint += splitted[i];
 	}
-	console.log(delim);
+	toPrint += delim;
 	for(var j = splitted.length - jumpSize; j < splitted.length; j++){
-		console.log(splitted[j]);
+		toPrint += splitted[j];
 	}
+
+	console.log(toPrint);
 }
 
 numberDelimited(userInput, delim, jumpSize);
